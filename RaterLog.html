@@ -1,4 +1,3 @@
-<!-- popup.html (minimal example) -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,28 +11,39 @@
       display: none;
     }
   </style>
-
 </head>
 <body>
   <!-- Main View-->
-  <div id ="mainView">
-  <h1> RateingLog Main Panel </h1>
-  <input type="time" id="StartTime">
-  <input type="time" id="EndTime">
-  <input type="date" id="Date">
-  <textarea id="TasksCompleted" placeholder="What did you do?"></textarea>
-  <button id="save-btn">Save Task</button>
-  <button id="view-logs">View Hours Worked</button>
+  <div id="mainView">
+    <h1> RaterLog Dashboard </h1>
+    <p> Please type in the following fields to log in your data: </p>
+    <input type="time" id="StartTime">
+    <input type="time" id="EndTime">
+    <input type="date" id="Date">
+    <textarea id="TasksCompleted" placeholder="What did you do?"></textarea>
+    <button id="save-btn">Save Task</button>
+    <button id="view-logs">View Hours Worked</button>
   </div>
 
-  <div id ="logs-dashboard" class="hidden">
-    <button id="back-button"> Back </button>
+  <!-- Logs View-->
+  <div id="logs-dashboard" class="hidden">
+    <button class="back-button"> Back </button>
     <h2> All Logs </h2>
     <div id="output">Loading...</div>
+    <button id="delete-logs"> Delete logs</button>
   </div>
-  
+
+  <!-- Warning View-->
+  <div id="warning-dashboard" class="hidden">
+    <button class="back-button"> Return to main screen. </button>
+    <p> Are you absolutely sure that you want to delete your logs? This is irreversible</p>
+    <button id="no">  No </button>
+    <button id="yes"> Yes</button>
+  </div>
+
+  <!-- Footer-->
   <footer> 
-    <a href = "https://github.com/AustinCGomez/RatingLog"> Contribute to the project on Github. </a>
+    <a href="https://github.com/AustinCGomez/RatingLog"> Built open source. Visit our website to assist! </a>
   </footer>
 
   <script src="popup.js"></script>
