@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             output.textContent = tasks
-                .map(t => `${t.date} | ${t.start}–${t.end}\n${t.description}\n`)
+                .map(t => `Date: ${t.date} | Start Time: ${t.start}– End Time ${t.end}\n Task Overview: ${t.description}\n`)
                 .join("\n" + "—".repeat(40) + "\n");
         });
     }
