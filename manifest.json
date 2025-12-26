@@ -5,7 +5,7 @@
   "manifest_version": 3,
   "permissions": ["storage"],
   "action": {
-    "default_popup": "RaterLog.html",
-    "default_icon": "RaterLog.png"
+    "default_popup": "frontend.html",
+    "default_icon": "logo.png"
   }
 }

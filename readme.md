@@ -1,6 +1,7 @@
-# RatingLog
 
-RatingLog is a plugin for Google Chrome that helps raters (I.E. TELUS, WeLocalize, Reform, and other platforms) to keep track of their hours worked which are often irregular compared a normal hourly shift. Through RatingLog, you can easily log in your hours and then collect them for later when you submit your timesheets. 
+# About us 
+
+RatingLog is a upcoming plugin for Google Chrome that helps raters (I.E. TELUS, WeLocalize, Reform, and other platforms) to keep track of their hours worked which are often irregular compared a normal hourly shift. Through RatingLog, you can easily log in your hours and then collect them for later when you submit your timesheets. 
 
 # Installation
 This plugin is currently only avaialble through an unpackaged extension. We are finalizing our UI design and bug testing before we release it for free onto the Google Chrome Extension store. For the time being please follow the stpes below to install the extension: 

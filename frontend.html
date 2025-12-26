@@ -2,24 +2,21 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <style>
-    body { font-family: sans-serif; padding: 15px; width: 300px; }
-    input, textarea { width: 100%; margin: 8px 0; padding: 8px; }
-    button { padding: 10px; width: 100%; margin-top: 10px; }
-    #output { white-space: pre-wrap; margin-top: 20px; font-size: 12px; }
-    .hidden {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
   <!-- Main View-->
   <div id="mainView">
     <h1> RaterLog Dashboard </h1>
     <p> Please type in the following fields to log in your data: </p>
+    <label for="StartTime">Start Time: </label>
     <input type="time" id="StartTime">
+    <label for="EndTime"> End Time: </label>
     <input type="time" id="EndTime">
+    <label for="date"> Enter the Date: </label>
     <input type="date" id="Date">
+    <label for="TasksCompleted"> Total Tasks Completed: </label>
     <textarea id="TasksCompleted" placeholder="What did you do?"></textarea>
     <button id="save-btn">Save Task</button>
     <button id="view-logs">View Hours Worked</button>
@@ -43,9 +40,9 @@
 
   <!-- Footer-->
   <footer> 
-    <a href="https://github.com/AustinCGomez/RatingLog"> RatingLog is a open-source project. Visit our github to contribute! </a>
+    <p> Developed free for everyone under the MIT License! </p>
   </footer>
 
-  <script src="popup.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

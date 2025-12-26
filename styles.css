@@ -1,0 +1,52 @@
+
+
+body {
+    font-family: sans-serif;
+    padding: 15px;
+    width: 300px;
+    background-color: #0F172A;
+
+    
+
+}
+
+input, textarea {
+
+    width: 100%;
+    margin: 8px 0;
+    padding: 8px;
+}
+
+button {
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    color: white;
+    background-color:#3B82F6;
+}
+
+#output {
+    white-space: pre-wrap;
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+#mainView {
+    color:#F1F5F9;
+
+}
+
+#logs-dashboard {
+    color: #F1F5F9;
+}
+#warning-dashboard {
+    color: #F1F5F9;
+}
+
+footer {
+    background-color: white;
+}
