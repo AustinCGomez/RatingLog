@@ -1,6 +1,6 @@
 {
-  "name": "RaterLog",
-  "description": "Simple utility to accuratly keep track of your hours as a Rater or Freelancer.",
+  "name": "Timebox",
+  "description": "Simple utility to accuratly keep track of your hours as a freelancer.",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage"],
