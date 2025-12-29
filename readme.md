@@ -18,4 +18,4 @@ To submit a bug that you found while using the program please head to our issues
 3. Evidence i.e. photos, videos, etc. [Optional but helpful]
 
 ## Contribute:
-You are welcome to fork this repository and submit pull requests to fix any bugs or submit an enhancement request. We always appreciate the help and we want see your feedback from the community on what else can be done.
+We appreciate all the help that we can get to move this project forward. Please take a look at our issues tab at [issues](https://github.com/AustinCGomez/RatingLog/issues) where you can find all open issues. If there is no issue theat you fancy then consider making a suggestion or enhancement requests. 
