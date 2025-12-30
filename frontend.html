@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="styles.css">
 </head>
+<!--Main Dashboard Section-->
 
 <body>
   <div class="app-container">
@@ -32,13 +33,14 @@
         <textarea id="TasksCompleted" placeholder="Briefly describe your tasks..."></textarea>
       </div>
 
-      <button id="save-btn" class="primary-btn">Save Task</button>
-      <button id="view-logs" class="secondary-btn">View Logs</button>
+      <button id="save-btn" class="primary-btn">Save a new timesheet</button>
+      <button id="view-logs" class="secondary-btn">View Your Timesheet</button>
     </div>
 
+<!--Log Dashboard Section-->
     <div id="logs-dashboard" class="card hidden">
       <button class="back-button link-btn">← Back</button>
-      <h2>All Logs</h2>
+      <h2>All available timesheets </h2>
       <div id="output" class="logs-box">No logs found...</div>
       <button id="delete-logs" class="danger-btn">Delete All Logs</button>
     </div>
@@ -55,7 +57,6 @@
 
     <footer>
       <p>MIT Licensed · Free for everyone</p>
-      <p>Check out our Github!</p>
     </footer>
 
   </div>
