@@ -7,11 +7,20 @@
 <!--Main Dashboard Section-->
 
 <body>
+  
+
   <div class="app-container">
 
-    <div id="mainView" class="card">
-      <h1>Timebox</h1>
-      <p class="subtitle">Log your working hours</p>
+    <div id ="homeView" class="card">
+      <h1> Welcome to Timebox </h1>
+      <button id="view-hours" class="primary-btn"> Log hours</button>
+      <button id="view-logs" class="primary-btn"> View Logs</button>
+      <button id="settings-btn" class="primary-btn"> Settings </button>
+    </div>
+
+    <div id="mainView" class="card hidden">
+      <button class="back-button link-btn">← Back</button>
+      <h1>Log your working hours: </h1>
 
       <div class="field">
         <label for="StartTime">Start Time</label>
@@ -53,6 +62,12 @@
 
       <button id="no" class="secondary-btn">Cancel</button>
       <button id="yes" class="danger-btn">Yes, Delete</button>
+    </div>
+
+    <div id="settings-dashboard" class="card hidden">
+      <button class="back-button link-btn">← Back</button>
+      <h1> Application settings</h1>
+      <button id="delete-logs" class="danger-btn">Delete All Logs</button>
     </div>
 
     <footer>

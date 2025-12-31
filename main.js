@@ -6,10 +6,14 @@ let tasks = [];
 document.addEventListener("DOMContentLoaded", () => {
     const saveBtn = document.getElementById("save-btn");
     const viewBtn = document.getElementById("view-logs");
+    const viewsHrsBtn = document.getElementById("view-hours");
     const delBtn = document.getElementById("delete-logs");
     const output = document.getElementById("output");
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
+    const bckbutton = document.getElementById("back");
+    const settingsBtn = document.getElementById("settings-btn");
+    //const viewlogsbtn = document.getElementById("view-logs");
 
     if (!saveBtn || !viewBtn) {
         console.error("One or more elements not found! Check IDs in HTML.");
@@ -58,17 +62,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // === View logs button ===
     viewBtn.addEventListener("click", () => {
-        document.getElementById("mainView").classList.add("hidden");
+        document.getElementById("homeView").classList.add("hidden");
         document.getElementById("logs-dashboard").classList.remove("hidden");
         displayLogs();
     });
 
+
     // === Back buttons (using class) ===
     document.querySelectorAll('.back-button').forEach(button => {
         button.addEventListener('click', () => {
-            document.getElementById("mainView").classList.remove("hidden");
+            document.getElementById("homeView").classList.remove("hidden");
+            document.getElementById("mainView").classList.add("hidden");
             document.getElementById("logs-dashboard").classList.add("hidden");
             document.getElementById("warning-dashboard").classList.add("hidden");
+            document.getElementById("settings-dashboard").classList.add("hidden");
         });
     });
 
@@ -93,6 +100,19 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("mainView").classList.remove("hidden");
             alert("All logs deleted successfully!");
         });
+    });
+
+    // === View Hours Worked Button ===
+    viewsHrsBtn.addEventListener("click", ()=> {
+        document.getElementById("homeView").classList.add("hidden");
+        document.getElementById("mainView").classList.remove("hidden");
+
+
+    });
+
+    settingsBtn.addEventListener("click", ()=> {
+        document.getElementById("settings-dashboard").classList.remove("hidden");
+        document.getElementById("homeView").classList.add("hidden");
     });
 
     // === Display logs function ===
