@@ -129,6 +129,21 @@ const descError = document.getElementById("TasksCompleted-error");
         return; // Stop here if validation fails
     }
 
+
+function validateTime(inputElement, errorElement) {
+    const value = inputElement.value.trim();
+    
+    // Check if the field is empty
+    if (!value) {
+        errorElement.style.display = 'block';
+        errorElement.textContent = `${inputElement.id} is required`;
+        return false;
+    }
+    
+    // If validation passes, hide the error
+    errorElement.style.display = 'none';
+    return true;
+}
   
 
     const TASKS = {start, end, date, description, timestamp: Date.now() };
