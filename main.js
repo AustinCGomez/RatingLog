@@ -7,6 +7,11 @@ const BTN_CONFIRM_DELETE = document.getElementById("btn-execute-delete");
 const BTN_CANCEL_DELETE = document.getElementById("btn-cancel-delete");
 const BTNS_BACK_NAVIGATION = document.querySelectorAll(".back-button");
 
+
+
+
+
+
 // === Event Listeners ===
 
 BTN_SAVE_ENTRY.addEventListener("click", () => {
@@ -87,6 +92,7 @@ function getFormValues() {
             alert("All logs deleted successfully!")
             break;
         case "BACK-BUTTON":
+            const BCK_BUTTON_DATA_SAVED = document.getElementById("btn-save-data").textContent = 'Save a new timesheet';
             document.getElementById("view-home").classList.remove("hidden");
             document.getElementById("view-logger").classList.add("hidden");
             document.getElementById("view-logs-list").classList.add("hidden");
@@ -108,15 +114,22 @@ function ResetField(start, end, date, description, TodayDate, FormattedDate) {
 };
 
 function NewEntry(start, end, date, description, TodayDate, FormattedDate) {
-    if (!start || !end || !date || !description) {
-        alert("All fields must be entered prior to submission");
-        return;
+
+const startError = document.getElementById("StartTime-error"); 
+const endError = document.getElementById("EndTime-error");
+const dateError = document.getElementById("Date-error");
+const descError = document.getElementById("TasksCompleted-error");
+
+    const isStartValid = validateTime(document.getElementById("StartTime"), startError);
+    const isEndValid = validateTime(document.getElementById("EndTime"), endError);
+    const isDateValid = validateTime(document.getElementById("Date"), dateError);
+    const isDescValid = validateTime(document.getElementById("TasksCompleted"), descError);
+
+    if (!isStartValid || !isEndValid || !isDateValid || !isDescValid) {
+        return; // Stop here if validation fails
     }
 
-    if (date < FormattedDate) {
-        alert("ERROR: You cannot pick a date that is before today!");
-        return;
-    }
+  
 
     const TASKS = {start, end, date, description, timestamp: Date.now() };
     tasks.push(TASKS);
@@ -136,7 +149,7 @@ function displayLogs() {
         }
 
         output.textContent = tasks
-            .map(t => `Date: ${t.date} | Start Time: ${t.start}– End Time ${t.end}\n Task Overview: ${t.description}\n`)
+             .map(t => `Date: ${t.date}\nStart Time: ${t.start}\nEnd Time: ${t.end}\nTask Overview: ${t.description}\n`)
             .join("\n" + "—".repeat(40) + "\n");
     });
 }
