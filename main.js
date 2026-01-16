@@ -134,7 +134,7 @@ const descError = document.getElementById("TasksCompleted-error");
     const TASKS = {start, end, date, description, timestamp: Date.now() };
     tasks.push(TASKS);
     chrome.storage.local.set({ tasks: tasks }, () => {});
-    const BCK_BUTTON_DATA_SAVED = document.getElementById("btn-save-data").textContent = 'Saved!';
+    alert("Hours have been saved.", tasks);
     ResetField(start, end, date, description, TodayDate, FormattedDate);
     ViewSelector();
 };
@@ -152,16 +152,4 @@ function displayLogs() {
              .map(t => `Date: ${t.date}\nStart Time: ${t.start}\nEnd Time: ${t.end}\nTask Overview: ${t.description}\n`)
             .join("\n" + "—".repeat(40) + "\n");
     });
-}
-
-function validateTime(input, errorElement) {
-    if (!input.value) {
-        input.classList.add('error');
-        errorElement.classList.add('show');
-        return false;
-    } else {
-        input.classList.remove('error');
-        errorElement.classList.remove('show');
-        return true;
-    }
 }
