@@ -21,27 +21,35 @@
 
       <div class="field">
         <label for="StartTime">Start Time</label>
+        <div class="error-message" id="StartTime-error">Start time is invalid!</div>
         <input type="time" id="StartTime">
       </div>
 
       <div class="field">
         <label for="EndTime">End Time</label>
+        <div class="error-message" id="EndTime-error">End time is invalid!</div>
         <input type="time" id="EndTime">
       </div>
 
       <div class="field">
         <label for="Date">Date</label>
+        <div class="error-message" id="Date-error"> Date is invalid!</div>
         <input type="date" id="Date">
       </div>
 
       <div class="field">
         <label for="TasksCompleted">Tasks Completed</label>
+         <div class="error-message" id="TasksCompleted-error"> Description is invalid!</div>
         <textarea id="TasksCompleted" placeholder="Briefly describe your tasks..."></textarea>
       </div>
 
       <button id="btn-save-data" class="primary-btn">Save a new timesheet</button>
-      <button id="btn-quick-logs" class="secondary-btn">View Your Timesheet</button>
     </div>
+
+     
+     
+     
+    
 
     <div id="view-logs-list" class="card hidden">
       <button class="back-button link-btn">← Back</button>
@@ -64,6 +72,7 @@
       <h1> Application settings</h1>
       <button id="btn-delete-all" class="danger-btn">Delete All Logs</button>
     </div>
+
 
     <footer>
       <p>MIT Licensed · Free for everyone</p>
