@@ -7,7 +7,8 @@ const BTN_CONFIRM_DELETE = document.getElementById("btn-execute-delete");
 const BTN_CANCEL_DELETE = document.getElementById("btn-cancel-delete");
 const BTNS_BACK_NAVIGATION = document.querySelectorAll(".back-button");
 
-
+// view-log const 
+// view-logger const
 
 
 
@@ -87,9 +88,14 @@ function getFormValues() {
             tasks = [];
             chrome.storage.local.set({ tasks: [] }, () => { });
             console.log("All tasks deleted!");
+            //document.getElementById("view-confirm-delete").classList.add("hidden");
+            //document.getElementById("view-logger").classList.add("hidden");
+            // Editing here at line 92
+            document.getElementById("view-confirm-delete").textContent = "Deleted..";
+            setTimeout(() => {
+            document.getElementById("view-home").classList.remove("hidden");
             document.getElementById("view-confirm-delete").classList.add("hidden");
-            document.getElementById("view-logger").classList.add("hidden");
-            alert("All logs deleted successfully!")
+    }, 2000);
             break;
         case "BACK-BUTTON":
             const BCK_BUTTON_DATA_SAVED = document.getElementById("btn-save-data").textContent = 'Save a new timesheet';
@@ -148,8 +154,13 @@ function validateTime(inputElement, errorElement) {
 
     const TASKS = {start, end, date, description, timestamp: Date.now() };
     tasks.push(TASKS);
-    chrome.storage.local.set({ tasks: tasks }, () => {});
-    alert("Hours have been saved.", tasks);
+    chrome.storage.local.set({ tasks: tasks }, () => {}); 
+    BTN_SAVE_ENTRY.textContent = "Entry has been saved!";
+    BTN_SAVE_ENTRY.style.backgroundColor = "green";
+    setTimeout(() => {
+        BTN_SAVE_ENTRY.textContent = "Save a new timesheet";
+        BTN_SAVE_ENTRY.style.backgroundColor = "white";
+    }, 2000);
     ResetField(start, end, date, description, TodayDate, FormattedDate);
     ViewSelector();
 };
