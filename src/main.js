@@ -50,6 +50,12 @@ BTNS_BACK_NAVIGATION.forEach(button => {
     });
 });
 
+// Add form data save listeners
+document.getElementById("StartTime").addEventListener("input", saveFormData);
+document.getElementById("EndTime").addEventListener("input", saveFormData);
+document.getElementById("Date").addEventListener("input", saveFormData);
+document.getElementById("TasksCompleted").addEventListener("input", saveFormData);
+
 function getFormValues() {
     return {
         start: document.getElementById("StartTime").value,
@@ -59,16 +65,40 @@ function getFormValues() {
     };
 };
 
- // Load tasks on startup
+// Load tasks on startup
  chrome.storage.local.get("tasks", (result) => {
     tasks = result.tasks || [];
  });
 
- function ViewSelector(page) {
+ // Save form data to session storage
+ function saveFormData() {
+    const formData = getFormValues();
+    chrome.storage.session.set({ tempFormData: formData }, () => {});
+ }
+
+ // Load form data from session storage
+ function loadFormData() {
+    chrome.storage.session.get("tempFormData", (result) => {
+        if (result.tempFormData) {
+            document.getElementById("StartTime").value = result.tempFormData.start || "";
+            document.getElementById("EndTime").value = result.tempFormData.end || "";
+            document.getElementById("Date").value = result.tempFormData.date || "";
+            document.getElementById("TasksCompleted").value = result.tempFormData.description || "";
+        }
+    });
+ }
+
+ // Clear temporary form data
+ function clearTempFormData() {
+    chrome.storage.session.remove("tempFormData", () => {});
+ }
+
+function ViewSelector(page) {
     switch(page) {
         case "LOG-HOURS":
             document.getElementById("view-home").classList.add("hidden");
-            document.getElementById("view-logger").classList.remove("hidden");  
+            document.getElementById("view-logger").classList.remove("hidden");
+            loadFormData(); // Load saved form data
             break;
         case "VIEW-LOGS":
             document.getElementById("view-home").classList.add("hidden");
@@ -97,13 +127,14 @@ function getFormValues() {
             document.getElementById("view-confirm-delete").classList.add("hidden");
     }, 2000);
             break;
-        case "BACK-BUTTON":
+case "BACK-BUTTON":
             const BCK_BUTTON_DATA_SAVED = document.getElementById("btn-save-data").textContent = 'Save a new timesheet';
             document.getElementById("view-home").classList.remove("hidden");
             document.getElementById("view-logger").classList.add("hidden");
             document.getElementById("view-logs-list").classList.add("hidden");
             document.getElementById("view-confirm-delete").classList.add("hidden");
             document.getElementById("view-settings").classList.add("hidden");
+            // Don't clear temp form data when going back - user might return
             break;
         case "SETTINGS-BUTTON":
             document.getElementById("view-home").classList.add("hidden");
@@ -152,7 +183,7 @@ function validateTime(inputElement, errorElement) {
 }
   
 
-    const TASKS = {start, end, date, description, timestamp: Date.now() };
+const TASKS = {start, end, date, description, timestamp: Date.now() };
     tasks.push(TASKS);
     chrome.storage.local.set({ tasks: tasks }, () => {}); 
     BTN_SAVE_ENTRY.textContent = "Entry has been saved!";
@@ -162,6 +193,7 @@ function validateTime(inputElement, errorElement) {
         BTN_SAVE_ENTRY.style.backgroundColor = "white";
     }, 2000);
     ResetField(start, end, date, description, TodayDate, FormattedDate);
+    clearTempFormData(); // Clear temporary data after successful submission
     ViewSelector();
 };
 
