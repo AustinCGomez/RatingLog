@@ -1,0 +1,54 @@
+{
+  "name": "timebox",
+  "version": "1.0.0",
+  "description": "Simple utility to accurately keep track of your hours as a freelancer.",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "node build-tools/build.js",
+    "package": "npm run build && node build-tools/package.js",
+    "dev": "npm run build && echo \"Extension built for development. Load 'dist' folder in Chrome.\"",
+    "test": "jest",
+    "lint": "eslint src/ --ext .js",
+    "validate": "npm run lint && npm run test"
+  },
+  "keywords": [
+    "chrome-extension",
+    "time-tracking",
+    "freelancer",
+    "productivity"
+  ],
+  "author": "AustinCGomez",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.0",
+    "babel-jest": "^30.2.0",
+    "eslint": "^8.57.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "rimraf": "^5.0.5"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "roots": [
+      "__tests__/"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "webextensions": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "globals": {
+      "chrome": "readonly"
+    }
+  }
+}

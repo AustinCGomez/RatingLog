@@ -1,181 +1,52 @@
-const BTN_SAVE_ENTRY = document.getElementById("btn-save-data");
-const BTN_NAV_LOGGER = document.getElementById("btn-open-logger");
-const BTN_NAV_HISTORY = document.getElementById("btn-open-logs");
-const BTN_NAV_SETTINGS = document.getElementById("btn-open-settings");
-const BTN_TRIGGER_DELETE = document.getElementById("btn-delete-all");
-const BTN_CONFIRM_DELETE = document.getElementById("btn-execute-delete");
-const BTN_CANCEL_DELETE = document.getElementById("btn-cancel-delete");
-const BTNS_BACK_NAVIGATION = document.querySelectorAll(".back-button");
+import { ViewManager } from './components/ViewManager.js';
+import { TimeEntryForm } from './components/TimeEntryForm.js';
 
-// view-log const 
-// view-logger const
-
-
-
-
-// === Event Listeners ===
-
-BTN_SAVE_ENTRY.addEventListener("click", () => {
-    const { start, end, date, description } = getFormValues();
-    NewEntry(start, end, date, description);
-});
-
-BTN_NAV_LOGGER.addEventListener("click", () => {
-    ViewSelector("LOG-HOURS");
-});
-
-BTN_NAV_HISTORY.addEventListener("click", () => {
-    ViewSelector("VIEW-LOGS");    
-});
-
-BTN_NAV_SETTINGS.addEventListener("click", () =>{ 
-    ViewSelector("SETTINGS-BUTTON");
-});
-
-BTN_TRIGGER_DELETE.addEventListener("click", () => {
-    ViewSelector("DELETE-BUTTON");
-});
-
-BTN_CONFIRM_DELETE.addEventListener("click", () => {
-    ViewSelector("YES-INPUT");
-});
-
-BTN_CANCEL_DELETE.addEventListener("click", () => {
-    ViewSelector("NO-INPUT");
-});
-
-BTNS_BACK_NAVIGATION.forEach(button => {
-    button.addEventListener("click", () => {
-        ViewSelector("BACK-BUTTON");
-    });
-});
-
-function getFormValues() {
-    return {
-        start: document.getElementById("StartTime").value,
-        end: document.getElementById("EndTime").value,
-        date: document.getElementById("Date").value,
-        description: document.getElementById("TasksCompleted").value
-    };
-};
-
- // Load tasks on startup
- chrome.storage.local.get("tasks", (result) => {
-    tasks = result.tasks || [];
- });
-
- function ViewSelector(page) {
-    switch(page) {
-        case "LOG-HOURS":
-            document.getElementById("view-home").classList.add("hidden");
-            document.getElementById("view-logger").classList.remove("hidden");  
-            break;
-        case "VIEW-LOGS":
-            document.getElementById("view-home").classList.add("hidden");
-            document.getElementById("view-logs-list").classList.remove("hidden");
-            displayLogs();
-            break;
-        case "DELETE-BUTTON":
-            document.getElementById("view-logs-list").classList.add("hidden");
-            document.getElementById("view-confirm-delete").classList.remove("hidden");
-            document.getElementById("view-settings").classList.add("hidden");    
-            break;
-        case "NO-INPUT":
-            document.getElementById("view-confirm-delete").classList.add("hidden");
-            document.getElementById("view-logs-list").classList.remove("hidden");
-            break;
-        case "YES-INPUT":
-            tasks = [];
-            chrome.storage.local.set({ tasks: [] }, () => { });
-            console.log("All tasks deleted!");
-            //document.getElementById("view-confirm-delete").classList.add("hidden");
-            //document.getElementById("view-logger").classList.add("hidden");
-            // Editing here at line 92
-            document.getElementById("view-confirm-delete").textContent = "Deleted..";
-            setTimeout(() => {
-            document.getElementById("view-home").classList.remove("hidden");
-            document.getElementById("view-confirm-delete").classList.add("hidden");
-    }, 2000);
-            break;
-        case "BACK-BUTTON":
-            const BCK_BUTTON_DATA_SAVED = document.getElementById("btn-save-data").textContent = 'Save a new timesheet';
-            document.getElementById("view-home").classList.remove("hidden");
-            document.getElementById("view-logger").classList.add("hidden");
-            document.getElementById("view-logs-list").classList.add("hidden");
-            document.getElementById("view-confirm-delete").classList.add("hidden");
-            document.getElementById("view-settings").classList.add("hidden");
-            break;
-        case "SETTINGS-BUTTON":
-            document.getElementById("view-home").classList.add("hidden");
-            document.getElementById("view-settings").classList.remove("hidden");
-            break;
-    };
-};
-
-function ResetField(start, end, date, description, TodayDate, FormattedDate) {
-    document.getElementById("StartTime").value = "";
-    document.getElementById("EndTime").value = "";
-    document.getElementById("Date").value = "";
-    document.getElementById("TasksCompleted").value = "";  
-};
-
-function NewEntry(start, end, date, description, TodayDate, FormattedDate) {
-
-const startError = document.getElementById("StartTime-error"); 
-const endError = document.getElementById("EndTime-error");
-const dateError = document.getElementById("Date-error");
-const descError = document.getElementById("TasksCompleted-error");
-
-    const isStartValid = validateTime(document.getElementById("StartTime"), startError);
-    const isEndValid = validateTime(document.getElementById("EndTime"), endError);
-    const isDateValid = validateTime(document.getElementById("Date"), dateError);
-    const isDescValid = validateTime(document.getElementById("TasksCompleted"), descError);
-
-    if (!isStartValid || !isEndValid || !isDateValid || !isDescValid) {
-        return; // Stop here if validation fails
-    }
-
-
-function validateTime(inputElement, errorElement) {
-    const value = inputElement.value.trim();
+document.addEventListener('DOMContentLoaded', async () => {
+    const viewManager = new ViewManager();
+    const timeEntryForm = new TimeEntryForm();
     
-    // Check if the field is empty
-    if (!value) {
-        errorElement.style.display = 'block';
-        errorElement.textContent = `${inputElement.id} is required`;
-        return false;
-    }
-    
-    // If validation passes, hide the error
-    errorElement.style.display = 'none';
-    return true;
-}
-  
+    // Initialize navigation elements
+    const BTN_NAV_LOGGER = document.getElementById("btn-open-logger");
+    const BTN_NAV_HISTORY = document.getElementById("btn-open-logs");
+    const BTN_NAV_SETTINGS = document.getElementById("btn-open-settings");
+    const BTN_TRIGGER_DELETE = document.getElementById("btn-delete-all");
+    const BTN_CONFIRM_DELETE = document.getElementById("btn-execute-delete");
+    const BTN_CANCEL_DELETE = document.getElementById("btn-cancel-delete");
+    const BTNS_BACK_NAVIGATION = document.querySelectorAll(".back-button");
 
-    const TASKS = {start, end, date, description, timestamp: Date.now() };
-    tasks.push(TASKS);
-    chrome.storage.local.set({ tasks: tasks }, () => {}); 
-    BTN_SAVE_ENTRY.textContent = "Entry has been saved!";
-    BTN_SAVE_ENTRY.style.backgroundColor = "green";
-    setTimeout(() => {
-        BTN_SAVE_ENTRY.textContent = "Save a new timesheet";
-        BTN_SAVE_ENTRY.style.backgroundColor = "white";
-    }, 2000);
-    ResetField(start, end, date, description, TodayDate, FormattedDate);
-    ViewSelector();
-};
-
-function displayLogs() {
-    chrome.storage.local.get("tasks", (result) => {
-        tasks = result.tasks || [];
-
-        if (tasks.length === 0) {
-            output.textContent = "You have not submitted any hours at this time.";
-            return;
-        }
-
-        output.textContent = tasks
-             .map(t => `Date: ${t.date}\nStart Time: ${t.start}\nEnd Time: ${t.end}\nTask Overview: ${t.description}\n`)
-            .join("\n" + "—".repeat(40) + "\n");
+    // Bind navigation events
+    BTN_NAV_LOGGER.addEventListener("click", () => {
+        viewManager.switchView("LOG-HOURS");
     });
-}
+
+    BTN_NAV_HISTORY.addEventListener("click", () => {
+        viewManager.switchView("VIEW-LOGS");    
+    });
+
+    BTN_NAV_SETTINGS.addEventListener("click", () => { 
+        viewManager.switchView("SETTINGS-BUTTON");
+    });
+
+    BTN_TRIGGER_DELETE.addEventListener("click", () => {
+        viewManager.switchView("DELETE-BUTTON");
+    });
+
+    BTN_CONFIRM_DELETE.addEventListener("click", () => {
+        viewManager.switchView("YES-INPUT");
+    });
+
+    BTN_CANCEL_DELETE.addEventListener("click", () => {
+        viewManager.switchView("NO-INPUT");
+    });
+
+    BTNS_BACK_NAVIGATION.forEach(button => {
+        button.addEventListener("click", () => {
+            viewManager.switchView("BACK-BUTTON");
+        });
+    });
+
+    // Load initial data
+    const { StorageManager } = await import('./utils/storage.js');
+    const tasks = await StorageManager.getTasks();
+    console.log('Application initialized with', tasks.length, 'tasks');
+});
