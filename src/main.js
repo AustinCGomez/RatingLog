@@ -121,7 +121,7 @@ function ViewSelector(page) {
             document.getElementById("view-confirm-delete").classList.add("hidden");
     }, 2000);
             break;
-case "BACK-BUTTON":
+        case "BACK-BUTTON":
             const BCK_BUTTON_DATA_SAVED = document.getElementById("btn-save-data").textContent = 'Save a new timesheet';
             document.getElementById("view-home").classList.remove("hidden");
             document.getElementById("view-logger").classList.add("hidden");
@@ -194,14 +194,86 @@ const TASKS = {start, end, date, description, timestamp: Date.now() };
 function displayLogs() {
     chrome.storage.local.get("tasks", (result) => {
         tasks = result.tasks || [];
-
         if (tasks.length === 0) {
             output.textContent = "You have not submitted any hours at this time.";
             return;
         }
+        // Build HTML with per-entry edit and delete
+        output.innerHTML = tasks
+            .map((t, index) => `
+                <div class="log-entry" data-index="${index}">
+                    <div class="log-content">
+                        <p><strong>Date:</strong> ${t.date}</p>
+                        <p><strong>Start Time:</strong> ${t.start}</p>
+                        <p><strong>End Time:</strong> ${t.end}</p>
+                        <p><strong>Task Overview:</strong> ${t.description}</p>
+                    </div>
+                    <button class="edit-entry-btn" data-index="${index}">Edit</button>
+                    <button class="delete-entry-btn" data-index="${index}">Delete</button>
+                </div>
+            `)
+            .join("");
 
-        output.textContent = tasks
-             .map(t => `Date: ${t.date}\nStart Time: ${t.start}\nEnd Time: ${t.end}\nTask Overview: ${t.description}\n`)
-            .join("\n" + "—".repeat(40) + "\n");
+        // Attach event listeners to delete buttons
+        document.querySelectorAll(".delete-entry-btn").forEach(button => {
+            button.addEventListener("click", (e) => {
+                const index = parseInt(e.currentTarget.getAttribute("data-index"), 10);
+                deleteEntry(index);
+            });
+        });
+
+        // Attach event listeners to edit buttons
+        document.querySelectorAll(".edit-entry-btn").forEach(button => {
+            button.addEventListener("click", (e) => {
+                const index = parseInt(e.currentTarget.getAttribute("data-index"), 10);
+                enterEditMode(index);
+            });
+        });
+    });
+}
+
+function enterEditMode(index) {
+    const entryDiv = document.querySelector(`.log-entry[data-index='${index}']`);
+    if (!entryDiv) return;
+    const t = tasks[index];
+    entryDiv.innerHTML = `
+        <div class="log-content editing">
+            <label>Date: <input type="date" id="edit-date-${index}" value="${t.date}"></label>
+            <label>Start Time: <input type="time" id="edit-start-${index}" value="${t.start}"></label>
+            <label>End Time: <input type="time" id="edit-end-${index}" value="${t.end}"></label>
+            <label>Task Overview: <textarea id="edit-desc-${index}">${t.description}</textarea></label>
+        </div>
+        <div class="log-actions">
+            <button class="save-edit-btn" data-index="${index}">Save</button>
+            <button class="cancel-edit-btn" data-index="${index}">Cancel</button>
+        </div>
+    `;
+    // Bind Save/Cancel
+    entryDiv.querySelector('.save-edit-btn').addEventListener('click', () => {
+        const updated = {
+            date: document.getElementById(`edit-date-${index}`).value,
+            start: document.getElementById(`edit-start-${index}`).value,
+            end: document.getElementById(`edit-end-${index}`).value,
+            description: document.getElementById(`edit-desc-${index}`).value
+        };
+        if (!updated.date || !updated.start || !updated.end || !updated.description) {
+            alert('All fields are required');
+            return;
+        }
+        tasks[index] = { ...updated, timestamp: Date.now() };
+        chrome.storage.local.set({ tasks: tasks }, () => {
+            displayLogs();
+        });
+    });
+    entryDiv.querySelector('.cancel-edit-btn').addEventListener('click', () => {
+        displayLogs();
+    });
+}
+
+function deleteEntry(index) {
+    if (!confirm("Delete this entry? This cannot be undone.")) return;
+    tasks.splice(index, 1);
+    chrome.storage.local.set({ tasks: tasks }, () => {
+        displayLogs();
     });
 }
