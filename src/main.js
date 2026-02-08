@@ -7,12 +7,6 @@ const BTN_CONFIRM_DELETE = document.getElementById("btn-execute-delete");
 const BTN_CANCEL_DELETE = document.getElementById("btn-cancel-delete");
 const BTNS_BACK_NAVIGATION = document.querySelectorAll(".back-button");
 
-// view-log const 
-// view-logger const
-
-
-
-
 // === Event Listeners ===
 
 BTN_SAVE_ENTRY.addEventListener("click", () => {

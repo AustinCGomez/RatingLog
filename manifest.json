@@ -4,8 +4,8 @@
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage"],
-  "action": {
-    "default_popup": "frontend.html",
+"action": {
+    "default_popup": "dashboard.html",
     "default_icon": "logo.png"
   }
 }
