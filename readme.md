@@ -1,7 +1,7 @@
 
 # Timebox - Extension Version
 
-A simple and accurate time tracking Chrome extension designed for freelancers to keep track of their working hours.
+Due to the fact that some freelancers cannot work with installed extensions we have decided to embark on a new desktop version of Timebox called https://github.com/AustinCGomez/TimeVault. We will be arhiving Timebox until we feel there is a need for a open source timesheet extension. Open Source developers are welcome to still fork this project but it will not be maintained by the original maintainer for the time being. 
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
