@@ -1,5 +1,5 @@
 
-# Timebox
+# Timebox - Extension Version
 
 A simple and accurate time tracking Chrome extension designed for freelancers to keep track of their working hours.
 
